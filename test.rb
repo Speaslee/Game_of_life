@@ -12,8 +12,8 @@ class LifeTest < Minitest::Test
   def test_neighbors
     b = Board.new 10
     c = Cells.new(0,1)
-    b.neighbors c
-  
-    binding.pry
+    a = b.neighbors c
+
+    assert_equal 5, a.count
   end
 end
