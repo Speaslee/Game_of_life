@@ -6,14 +6,11 @@ class Pattern
 
 def initialize size
   @board= Board.new(size)
-  (1..size).each do |row|
 
-     (1..size).each do |col|
+end
 
-         str += "x"
-     end
-     puts str
-   end
+  def display
+
  end
 
 def next
