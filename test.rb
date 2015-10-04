@@ -9,11 +9,29 @@ class LifeTest < Minitest::Test
     assert_equal 3, b.column
   end
 
-  def test_neighbors
+  def test_are_there_neighbors
     b = Board.new 10
     c = Cells.new(0,1)
-    a = b.neighbors c
-
+    a = b.neighbor c
     assert_equal 5, a.count
   end
+
+ def test_cell_be_born
+   b = Board.new 10
+   c = Cells.new(0,1)
+   refute c.alive?
+   c.born
+   assert c.alive?
+ end
+
+def test_cell_be_dead
+  b = Board.new 10
+  c = Cells.new(0,1)
+  refute c.alive?
+  c.born
+  assert c.alive?
+  c.die
+  refute c.alive?
+end
+
 end
