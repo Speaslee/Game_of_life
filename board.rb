@@ -19,7 +19,7 @@ class Board
     (x-1..x+1).each do |rows|
       (y-1..y+1).each do |columns|
         next if rows == x && columns == y
-        if rows >= 0 && columns >= 0
+        if rows >= 0 && columns >= 0 && rows < @row && columns < @column
           @neighbors.push([rows,columns])
         end
       end
@@ -27,17 +27,20 @@ class Board
       @neighbors
 end
 
-def dead_or_alive #is what establishes the rules of the game for this program.
+def dead_or_alive(cell) #is what establishes the rules of the game for this program.
     living=[]
-    @neighbors.each do |cell|
-      if cell.live
-        living.push(cell)
+
+    @neighbors.each do |x,y|
+      c = @grid[x][y]
+      if c.live
+        living.push(c)
+
       end
     end
 
-    if cell.live #should check if the living cell has the correct number of living neighbors and kill it accordingly
+  if cell.live #should check if the living cell has the correct number of living neighbors and kill it accordingly
       if living.count == 2 || living.count == 3
-        cell.born
+      cell.born
       else
         cell.die
       end
@@ -50,10 +53,14 @@ def dead_or_alive #is what establishes the rules of the game for this program.
       end
     end
 #does not do what it is supposed to do. Not sure if I ever call this correctly. Is supposed to be called in the game file
-  end
+update
+
 end
 
+def update
 
+end
+end
 
 class Cells #as far as I can tell it does what it is supposed to do in the tests
   attr_accessor :alive, :x, :y
