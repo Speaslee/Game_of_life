@@ -9,7 +9,8 @@ class Board
     @row = size
     @column = size
     @grid= Array.new(@column) {|y| Array.new(@row) {|x| Cells.new(x,y)}}
-
+    @living_next=[]
+    @dead_next= []
   end
 
   def neighbor cell #Tests correctly
@@ -24,42 +25,50 @@ class Board
         end
       end
     end
-      @neighbors
-end
+    @neighbors
+  end
 
-def dead_or_alive(cell) #is what establishes the rules of the game for this program.
+  def dead_or_alive(cell) #is what establishes the rules of the game for this program.
     living=[]
 
     @neighbors.each do |x,y|
-      c = @grid[x][y]
+      c = @grid[y][x]
       if c.live
         living.push(c)
-
       end
     end
 
-  if cell.live #should check if the living cell has the correct number of living neighbors and kill it accordingly
+    if cell.live #should check if the living cell has the correct number of living neighbors and kill it accordingly
       if living.count == 2 || living.count == 3
-      cell.born
+        @living_next.push(cell)
       else
-        cell.die
+        @dead_next.push(cell)
       end
 
     else cell.live == false #should check if the living cell has the correct number of dead neighbors and birth it accordingly
       if living.count == 3
-        cell.born
+        @living_next.push(cell)
       else
-        cell.die
+        @dead_next.push(cell)
       end
     end
-#does not do what it is supposed to do. Not sure if I ever call this correctly. Is supposed to be called in the game file
-update
+    #does not do what it is supposed to do. Not sure if I ever call this correctly. Is supposed to be called in the game file
 
-end
+  end
 
-def update
+  def update
+    @living_next.each do |cell|
+      cell.born
+      end
 
-end
+      @dead_next.each do |cell|
+        cell.die
+    end
+
+    @living_next = []
+    @dead_next = []
+  end
+
 end
 
 class Cells #as far as I can tell it does what it is supposed to do in the tests
