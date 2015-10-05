@@ -3,20 +3,20 @@ require "./board"
 
 
 class LifeTest < Minitest::Test
-  def test_boards_can_have_varying_sizes
+  def test_boards_can_have_varying_sizes #passes
 
     b = Board.new 3
     assert_equal 3, b.column
   end
 
-  def test_are_there_neighbors
+  def test_are_there_neighbors #passes
     b = Board.new 10
     c = Cells.new(0,1)
     a = b.neighbor c
     assert_equal 5, a.count
   end
 
- def test_cell_be_born
+ def test_cell_be_born #passes
    b = Board.new 10
    c = Cells.new(0,1)
    refute c.live
@@ -24,7 +24,7 @@ class LifeTest < Minitest::Test
    assert c.live
  end
 
-def test_cell_be_dead
+def test_cell_be_dead #probably unnecessary
   b = Board.new 10
   c = Cells.new(0,1)
   refute c.live
@@ -34,7 +34,7 @@ def test_cell_be_dead
   refute c.live
 end
 
-def test_patter_can_be_made
+def test_patter_can_be_made #does not work
   b = Board.new 10
   c=Cells.new[[1,0],[1,1],[1,2]].born
   if b.each do |row|
