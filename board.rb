@@ -9,21 +9,8 @@ class Board
     @row = size
     @column = size
     @grid= Array.new(@column) {|y| Array.new(@row) {|x| Cells.new(x,y)}}
-    display
-  end
 
-  def display #should go through each cell of the array and check if it is alive or dead and print the appropriate symbol
-    #does not do what it should do. Maybe should be in the game_life.rb but wasn't working there either.
-    @grid.each do |row|
-      row.each {
-        |cell| if cell.live print "O"
-        else print "."
-        end
-      }
-      puts
-    end
   end
-
 
   def neighbor cell #Tests correctly
     @neighbors = []
@@ -69,7 +56,7 @@ end
 
 
 class Cells #as far as I can tell it does what it is supposed to do in the tests
-  attr_accessor :alive, :x, :y, :live
+  attr_accessor :alive, :x, :y
 
   def initialize(x, y)
     @x = x
@@ -77,7 +64,7 @@ class Cells #as far as I can tell it does what it is supposed to do in the tests
     @alive = false
   end
 
-  def live 
+  def live
     @alive
   end
 
