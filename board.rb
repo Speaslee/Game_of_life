@@ -8,21 +8,23 @@ class Board
 
     @row = size
     @column = size
-    @grid= Array.new (@column) {|y| Array.new(@row) {|x| Cells.new(x,y)}}
-
+    @grid= Array.new(@column) {|y| Array.new(@row) {|x| Cells.new(x,y)}}
+    display
   end
 
   def display
-    grid.each do |array|
-      array.each {|cell| print cell}
+    @grid.each do |row|
+      row.each {
+        |cell| if cell.live print "O"
+        else print "."
+        end
+      }
       puts
     end
   end
 
 
   def neighbor cell
-
-
     @neighbors = []
     x = cell.x
     y = cell.y
@@ -30,29 +32,29 @@ class Board
       (y-1..y+1).each do |columns|
         next if rows == x && columns == y
         if rows >= 0 && columns >= 0
-          @neighbors.push ([rows,columns])
+          @neighbors.push([rows,columns])
         end
       end
     end
-      neighbors
+      @neighbors
 end
 
 def dead_or_alive
     living=[]
     @neighbors.each do |cell|
-      if cell.alive
-        living.push (cell)
+      if cell.live
+        living.push(cell)
       end
     end
 
-    if cell.alive
+    if cell.live
       if living.count == 2 || living.count == 3
         cell.born
       else
         cell.die
       end
 
-    else cell.alive == false
+    else cell.live == false
       if living.count == 3
         cell.born
       else
@@ -66,7 +68,7 @@ end
 
 
 class Cells
-  attr_accessor :alive, :x, :y
+  attr_accessor :alive, :x, :y, :live
 
   def initialize(x, y)
     @x = x
@@ -74,7 +76,7 @@ class Cells
     @alive = false
   end
 
-  def alive?
+  def live
     @alive
   end
 
@@ -88,5 +90,3 @@ class Cells
 
 
 end
-b = Board.new 5
-b.dead_or_alive

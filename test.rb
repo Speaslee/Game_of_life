@@ -19,19 +19,32 @@ class LifeTest < Minitest::Test
  def test_cell_be_born
    b = Board.new 10
    c = Cells.new(0,1)
-   refute c.alive?
+   refute c.live
    c.born
-   assert c.alive?
+   assert c.live
  end
 
 def test_cell_be_dead
   b = Board.new 10
   c = Cells.new(0,1)
-  refute c.alive?
+  refute c.live
   c.born
-  assert c.alive?
+  assert c.live
   c.die
-  refute c.alive?
+  refute c.live
+end
+
+def test_patter_can_be_made
+  b = Board.new 10
+  c=Cells.new[[1,0],[1,1],[1,2]].born
+  if b.each do |row|
+    row.each {
+      |cell| if cell.live print "O"
+      else print "."
+      end
+    }
+  end
+end
 end
 
 end
