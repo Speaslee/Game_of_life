@@ -6,7 +6,7 @@ class Pattern
 
   def initialize size
     @board= Board.new(size)
-    @initial_pattern =[[1,0],[1,1],[1,2]] #should be a blinker
+    @initial_pattern =[[3,1],[3,2],[3,3],[1,2],[2,3]] #should be a blinker
     @initial_pattern.each do |x,y|
       cell = @board.grid[x][y]
       cell.born
@@ -35,9 +35,11 @@ class Pattern
     end
   end
 end
-g= Pattern.new (4)
-5.times do
+g= Pattern.new (7)
+10.times do
   g.next_shape
+  system "clear"
   g.display #That should make it rotate
+
   sleep 1
 end
